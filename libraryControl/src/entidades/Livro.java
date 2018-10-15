@@ -12,23 +12,22 @@ package entidades;
 public class Livro {
 
     private int id = 0;
-    private int isbn = 0;
+    private String isbn = "";
     private String titulo = "";
     private String fotoDaCapa = "";
-    private int autorID = 0;
-    private int editoraID = 0;
+    private Autor autor;
+    private Editora editora;
 
     public Livro() {
 
     }
 
-    public Livro(int id, int isbn, String titulo, String fotoDaCapa, int autorID, int editoraID) {
+    public Livro(int id, String isbn, String titulo, String fotoDaCapa) {
         this.id = id;
         this.isbn = isbn;
         this.titulo = titulo;
         this.fotoDaCapa = fotoDaCapa;
-        this.autorID = autorID;
-        this.editoraID = editoraID;
+        
     }
 
     /**
@@ -48,14 +47,14 @@ public class Livro {
     /**
      * @return the isbn
      */
-    public int getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
     /**
      * @param isbn the isbn to set
      */
-    public void setIsbn(int isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -90,29 +89,29 @@ public class Livro {
     /**
      * @return the autor
      */
-    public int getAutorID() {
-        return autorID;
+    public Autor getAutor() {
+        return this.autor;
     }
 
     /**
      * @param autor the autor to set
      */
-    public void setAutorID(int autorID) {
-        this.autorID = autorID;
+    public void setAutor(Autor autor) {
+        this.autor = autor;
     }
 
     /**
      * @return the editora
      */
-    public int getEditoraID() {
-        return editoraID;
+    public Editora getEditora() {
+        return this.editora;
     }
 
     /**
      * @param editora the editora to set
      */
-    public void setEditoraID(int editoraID) {
-        this.editoraID = editoraID;
+    public void setEditora(Editora editora) {
+        this.editora = editora;
     }
 
 }

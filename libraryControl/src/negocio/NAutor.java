@@ -6,7 +6,6 @@
 package negocio;
 
 import entidades.Autor;
-import interfaces.IAutor;
 import java.sql.SQLException;
 import java.util.List;
 import persistencia.PAutor;
@@ -22,7 +21,7 @@ public class NAutor {
         persistencia = new PAutor();
     }
 
-    public void incluir(Autor parametro) throws SQLException, Exception {
+    public void salvar(Autor parametro) throws SQLException, Exception {
 
         if (parametro.getNome().isEmpty()) {
             throw new Exception("É necessário informar o nome");

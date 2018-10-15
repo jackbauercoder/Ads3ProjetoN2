@@ -6,10 +6,6 @@
 package persistencia;
 
 import entidades.Autor;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -94,6 +90,32 @@ public class PAutor implements IAutor {
         cnn.close();
         return retorno;
     }
-}
+    
+    public Autor consultar(String parametro) throws SQLException {
+        
+        String sql = " SELECT * FROM autor WHERE nome = ?;";
 
+        Connection cnn = util.Conexao.getConexao();
+
+        // cria o procedimento para a execução "contra" o banco de dados
+        PreparedStatement prd = cnn.prepareStatement(sql);
+
+        // trocando os valores das ? por valores recebido no método
+        prd.setString(1, parametro);
+
+        ResultSet rs = prd.executeQuery();
+        Autor retorno = new Autor();
+        if (rs.next()) {
+
+            retorno.setId(rs.getInt("id"));
+            retorno.setNome(rs.getString("nome"));
+
+        }
+
+        //executa todo o comando e grava no banco de dados
+        prd.execute();
+        cnn.close();
+        return retorno;
+    }
+}
 
