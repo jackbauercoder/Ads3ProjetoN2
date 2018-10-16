@@ -41,6 +41,10 @@ public class NAutor {
     public Autor consultar(int parametro) throws SQLException {
         return persistencia.consultar(parametro);        
     }
+    
+    public Autor consultar(String parametro) throws SQLException {
+        return persistencia.consultar(parametro);        
+    }
 
     public List<Autor> listar() throws SQLException, Exception {
         return persistencia.listar();

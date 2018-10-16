@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import interfaces.IAutor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -38,7 +39,23 @@ public class PAutor implements IAutor {
 
     @Override
     public ArrayList<Autor> listar() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "SELECT * FROM autor";
+
+        Connection cnn = util.Conexao.getConexao();
+        Statement st = cnn.createStatement();
+
+        ResultSet rs = st.executeQuery(sql);
+        ArrayList<Autor> retorno = new ArrayList();
+        
+        while (rs.next()) {
+            Autor au = new Autor();
+
+            au.setId(rs.getInt("id"));
+            au.setNome(rs.getString("nome"));
+            retorno.add(au);
+        }
+
+        return retorno;
     }
 
     @Override
@@ -61,7 +78,21 @@ public class PAutor implements IAutor {
 
     @Override
     public void excluir(int parametro) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Cria a instrução sql para a inserção de registros
+        String sql = "DELETE FROM autor "
+                + " WHERE id = ?";
+
+        //Cria a conexao a partir dos métodos da fábrica de conexões
+        Connection cnn = util.Conexao.getConexao();
+
+        //cria o procedimento para a execução "contra" o BD
+        PreparedStatement prd = cnn.prepareStatement(sql);
+
+        //Trocando os valores da ? por valores recebidos no método
+        prd.setInt(1, parametro);
+                
+        prd.execute();
+        cnn.close();
     }
 
     public Autor consultar(int parametro) throws SQLException {

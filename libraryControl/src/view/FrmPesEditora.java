@@ -46,7 +46,7 @@ public class FrmPesEditora extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblResultado = new javax.swing.JTable();
 
-        setTitle("Pesquisar Tipo Associado");
+        setTitle("Pesquisa de Editora");
 
         btnFechar.setText("Fechar");
         btnFechar.addActionListener(new java.awt.event.ActionListener() {

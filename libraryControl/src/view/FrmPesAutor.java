@@ -17,7 +17,9 @@ import negocio.NAutor;
  * @author repez
  */
 public class FrmPesAutor extends javax.swing.JInternalFrame {
-
+    
+    JDesktopPane painelPrincipal;
+    
     /**
      * Creates new form FrmPesAssociado
      */
@@ -30,8 +32,6 @@ public class FrmPesAutor extends javax.swing.JInternalFrame {
         this();
         this.painelPrincipal = painelPrincipal;
     }  
-    
-    JDesktopPane painelPrincipal;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,6 +45,8 @@ public class FrmPesAutor extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblResultado = new javax.swing.JTable();
         btnFechar = new javax.swing.JButton();
+
+        setTitle("Pesquisa de Autor");
 
         tblResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -100,13 +102,14 @@ public class FrmPesAutor extends javax.swing.JInternalFrame {
     private void tblResultadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoMousePressed
         try {
             int linhaSelecionada = tblResultado.getSelectedRow();
-            String codigo = tblResultado.getValueAt(linhaSelecionada, 0).toString();
+            String id = tblResultado.getValueAt(linhaSelecionada, 0).toString();
 
-            FrmCadAutor frmCadAutor = new FrmCadAutor(painelPrincipal, codigo);
+            FrmCadAutor frmCadAutor = new FrmCadAutor(painelPrincipal, id);
             painelPrincipal.add(frmCadAutor);
             frmCadAutor.setVisible(true);
             this.dispose();
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_tblResultadoMousePressed
@@ -145,6 +148,7 @@ public class FrmPesAutor extends javax.swing.JInternalFrame {
             tblResultado.setModel(new DefaultTableModel(linhas, cabecalho));            
             
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         

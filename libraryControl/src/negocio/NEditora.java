@@ -42,6 +42,11 @@ public class NEditora {
     public Editora consultar(int parametro) throws SQLException, Exception {
         return persistencia.consultar(parametro);        
     }
+    
+    public Editora consultar(String parametro) throws SQLException, Exception {
+        return persistencia.consultar(parametro);        
+    }
+
 
     public ArrayList<Editora> listar() throws SQLException, Exception {
         return persistencia.listar();

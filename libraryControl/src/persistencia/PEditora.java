@@ -49,7 +49,7 @@ public class PEditora implements IEditora {
         while (rs.next()) {
             Editora ed = new Editora();
 
-            ed.setId(rs.getInt("identificador"));
+            ed.setId(rs.getInt("id"));
             ed.setNome(rs.getString("nome"));
             retorno.add(ed);
         }
@@ -59,7 +59,7 @@ public class PEditora implements IEditora {
 
     @Override
     public void alterar(Editora editora) throws Exception {
-        String sql = "UPDATE autor SET nome = ? WHERE id = ?";
+        String sql = "UPDATE editora SET nome = ? WHERE id = ?";
 
         Connection cnn = util.Conexao.getConexao();
 
@@ -100,7 +100,7 @@ public class PEditora implements IEditora {
     
     public Editora consultar(String parametro) throws Exception {
         String sql = "SELECT id, nome "
-                + " FROM editora WHERE id = ?;";
+                + " FROM editora WHERE nome = ?;";
 
         Connection cnn = util.Conexao.getConexao();
         PreparedStatement prd = cnn.prepareStatement(sql);

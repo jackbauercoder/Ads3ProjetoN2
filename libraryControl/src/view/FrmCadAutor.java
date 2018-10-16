@@ -15,6 +15,8 @@ import negocio.NAutor;
  * @author repez
  */
 public class FrmCadAutor extends javax.swing.JInternalFrame {
+    
+    JDesktopPane painelPrincipal;   
 
     /**
      * Creates new form FrmCadAssociado
@@ -28,8 +30,6 @@ public class FrmCadAutor extends javax.swing.JInternalFrame {
         this();
         this.painelPrincipal = painelPrincipal;
     }
-    
-    JDesktopPane painelPrincipal;    
 
     FrmCadAutor(JDesktopPane painelPrincipal, String id) {
         
@@ -37,6 +37,7 @@ public class FrmCadAutor extends javax.swing.JInternalFrame {
         this.painelPrincipal = painelPrincipal;
         
         try {
+            
             NAutor na = new NAutor();
             Autor autor = na.consultar(Integer.parseInt(id));
             
@@ -46,25 +47,10 @@ public class FrmCadAutor extends javax.swing.JInternalFrame {
             btnExcluir.setEnabled(true);
             
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    
-    /*
-    public void loadSelect() {
-        try {
-            TipoAssociado init = new TipoAssociado(0, "Selecione...");
-            
-            cmbTipoAssociado.addItem(init.toString());
-            
-            for(TipoAssociado item : new NTipoAssociado().listar()) {
-                cmbTipoAssociado.addItem(item.toString());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    */
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -189,7 +175,6 @@ public class FrmCadAutor extends javax.swing.JInternalFrame {
             tlPesquisa.setVisible(true);
             this.dispose();
         } catch (Exception e) {
-            e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed

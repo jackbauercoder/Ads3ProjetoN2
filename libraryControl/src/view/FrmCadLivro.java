@@ -7,32 +7,66 @@ package view;
 
 import entidades.Autor;
 import entidades.Editora;
+import entidades.Livro;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import negocio.NAutor;
 import negocio.NEditora;
+import negocio.NLivro;
 
 /**
  *
  * @author repez
  */
 public class FrmCadLivro extends javax.swing.JInternalFrame {
+    
+    JDesktopPane painelPrincipal;  
 
     /**
      * Creates new form FrmCadLivro
      */
     public FrmCadLivro() {
         initComponents();
+        loadSelect();
     }
     
     public FrmCadLivro(JDesktopPane painelPrincipal) {
         this();
         this.painelPrincipal = painelPrincipal;
     }
-       
-    JDesktopPane painelPrincipal;    
+
+    FrmCadLivro(JDesktopPane painelPrincipal, String id) {
+        this();
+        this.painelPrincipal = painelPrincipal;
+        
+        try {
+            
+            NAutor na = new NAutor();
+            NEditora ne = new NEditora();
+            NLivro nl = new NLivro();
+            
+            Livro livroAtual = nl.consultar(Integer.parseInt(id));
+            Autor autorAtual = na.consultar(livroAtual.getAutor().getId());
+            Editora editoraAtual = ne.consultar(livroAtual.getEditora().getId());
+            
+            txtID.setText(String.valueOf(livroAtual.getId()));
+            txtISBN.setText(livroAtual.getIsbn());
+            txtTitulo.setText(livroAtual.getTitulo());
+            txtCaminhoCapa.setText(livroAtual.getFotoDaCapa());
+            cmbAutor.setSelectedItem(autorAtual.getNome());
+            cmbEditora.setSelectedItem(editoraAtual.getNome());
+            
+            btnExcluir.setEnabled(true);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
     
     public void loadSelect() {
         try {
@@ -89,6 +123,11 @@ public class FrmCadLivro extends javax.swing.JInternalFrame {
         txtID.setEditable(false);
 
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Título:");
 
@@ -107,10 +146,25 @@ public class FrmCadLivro extends javax.swing.JInternalFrame {
 
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Capa:");
 
@@ -220,33 +274,91 @@ public class FrmCadLivro extends javax.swing.JInternalFrame {
                 throw new Exception("O título é obrigatório!");
             }
             
-            if(txtTitulo.getText().isEmpty()) {
-                throw new Exception("O título é obrigatório!");
+            if(cmbAutor.getSelectedIndex() == 0) {
+                throw new Exception("O autor é obrigatório!");
             }
             
-            if(txtTitulo.getText().isEmpty()) {
-                throw new Exception("O título é obrigatório!");
+            if(cmbEditora.getSelectedIndex() == 0) {
+                throw new Exception("A editora é obrigatória!");
             }
 
-            Autor autor = new Autor();
+            Livro livro = new Livro();
+            livro.setIsbn(txtISBN.getText());
+            livro.setTitulo(txtTitulo.getText());
+            livro.setFotoDaCapa(txtCaminhoCapa.getText());
+            
+            NAutor na = new NAutor();
+            NEditora ne = new NEditora();
+            
+            Autor autorVinculado = na.consultar(cmbAutor.getSelectedItem().toString());
+            Editora editoraVinculada = ne.consultar(cmbEditora.getSelectedItem().toString());
+            
+            livro.setAutor(autorVinculado);
+            livro.setEditora(editoraVinculada);
 
             if(!txtID.getText().isEmpty()) {
-                autor.setId(Integer.parseInt(txtID.getText()));
+                livro.setId(Integer.parseInt(txtID.getText()));
             }
-
             
+            BufferedImage imagem = ImageIO.read(new File(livro.getFotoDaCapa()));
+            String caminhoFinal = "./src/img/" + livro.getTitulo() + ".jpg";
+            ImageIO.write(imagem, "jpg", new File(caminhoFinal));
+            
+            livro.setFotoDaCapa(caminhoFinal);
 
-            NAutor na = new NAutor();
-            na.salvar(autor);
+            NLivro nl = new NLivro();
+            nl.salvar(livro);
             JOptionPane.showMessageDialog(null, "Livro cadastrado com sucesso!");
 
-            //limpar();
+            limpar();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limpar();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        try {
+            FrmPesLivro tlPesquisa = new FrmPesLivro(painelPrincipal);
+            painelPrincipal.add(tlPesquisa);
+            tlPesquisa.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        try {
+            int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o registro selecionado?", "libradyControl", JOptionPane.YES_NO_OPTION);
+            if(resposta == JOptionPane.YES_OPTION) {
+                
+                if(txtID.getText().isEmpty()) {
+                   throw new Exception("ID inválido!");
+                }
+                
+                NLivro nl = new NLivro();
+                    
+                nl.excluir(Integer.parseInt(txtID.getText()));
+
+                JOptionPane.showMessageDialog(null, "Livro excluído com sucesso!");
+
+                limpar();
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -270,4 +382,12 @@ public class FrmCadLivro extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtISBN;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
+
+    private void limpar() {
+        txtCaminhoCapa.setText("");
+        txtISBN.setText("");
+        txtTitulo.setText("");
+        cmbAutor.setSelectedIndex(0);
+        cmbEditora.setSelectedIndex(0);
+    }
 }

@@ -83,6 +83,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.add(optEditora);
 
         optLivro.setText("Livro");
+        optLivro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optLivroActionPerformed(evt);
+            }
+        });
         jMenu1.add(optLivro);
 
         jMenuBar1.add(jMenu1);
@@ -151,6 +156,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void optLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optLivroActionPerformed
+        try {
+            FrmCadLivro frmCadLivro = new FrmCadLivro(painelPrincipal);
+            painelPrincipal.add(frmCadLivro);
+            frmCadLivro.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_optLivroActionPerformed
 
     /**
      * @param args the command line arguments

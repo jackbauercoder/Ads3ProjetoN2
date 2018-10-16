@@ -70,12 +70,7 @@ public class PLivro implements ILivro {
 
     @Override
     public void alterar(Livro livro) throws Exception {
-        String sql = "UPDATE livro SET isbn = ?,"
-                + "set titulo = ?,"
-                + "set img_capa = ?"
-                + "set id_autor = ?"
-                + "set id_editora = ?"
-                + " WHERE id = ?";
+        String sql = "UPDATE livro set isbn = ?, titulo = ?, img_capa = ?, id_autor = ?, id_editora = ? where id = ?;";
 
         Connection cnn = util.Conexao.getConexao();
         PreparedStatement prd = cnn.prepareStatement(sql);
@@ -116,8 +111,6 @@ public class PLivro implements ILivro {
 
         }
         
-        prd.execute();
-        cnn.close();
         return retorno;
     }
 
