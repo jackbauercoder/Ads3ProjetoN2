@@ -131,7 +131,19 @@ public class FrmCadLivro extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Título:");
 
+        txtTitulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTituloKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("ISBN:");
+
+        txtISBN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtISBNKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("Autor:");
 
@@ -281,6 +293,10 @@ public class FrmCadLivro extends javax.swing.JInternalFrame {
             if(cmbEditora.getSelectedIndex() == 0) {
                 throw new Exception("A editora é obrigatória!");
             }
+            
+            if(txtCaminhoCapa.getText().isEmpty()) {
+                throw new Exception("A foto da capa do livro é obrigatória!");
+            }
 
             Livro livro = new Livro();
             livro.setIsbn(txtISBN.getText());
@@ -359,6 +375,16 @@ public class FrmCadLivro extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void txtTituloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTituloKeyTyped
+    }//GEN-LAST:event_txtTituloKeyTyped
+
+    private void txtISBNKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtISBNKeyTyped
+        String permitidos = "0987654321";
+        if(!permitidos.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtISBNKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,8 +5,6 @@
  */
 package entidades;
 
-
-
 /**
  *
  * @author aluno
@@ -16,36 +14,27 @@ public class Cliente {
     private int id = 0;
     private String cpf = "";
     private String telefone = "";
-    private String uf = "";
-    private String tipoPessoa = "";
+    private String tipoCliente = "";
     private String nome = "";
     private String endereco = "";
-    private String cidade = "";
     private String email = "";
     private float saldoDevedor = 0;
-    //private int quantidadeReservas = 0;
-    //private int quantidadeEmprestimos = 0;
-
+   
     public Cliente() {
 
     }
 
-    public Cliente(int id, String nome, String cpf, String cidade, String uf, String email,
-            String endereco, String telefone, String tipoPessoa, float saldoDevedor) {
+    public Cliente(int id, String nome, String cpf, String email,
+            String endereco, String telefone, String tipoCliente, float saldoDevedor) {
 
         this.id = id;
         this.endereco = endereco;
         this.nome = nome;
         this.cpf = cpf;
-        this.cidade = cidade;
-        this.uf = uf;
         this.email = email;
         this.telefone = telefone;
-        this.tipoPessoa = tipoPessoa;
+        this.tipoCliente = tipoCliente;
         this.saldoDevedor = saldoDevedor;
-        //this.quantidadeReservas = quantidadeReservas;
-        //this.quantidadeEmprestimos = quantidadeEmprestimos;
-
     }
 
     /**
@@ -77,31 +66,17 @@ public class Cliente {
     }
 
     /**
-     * @return the uf
+     * @return the tipoCliente
      */
-    public String getUf() {
-        return uf;
+    public String getTipoCliente() {
+        return tipoCliente;
     }
 
     /**
-     * @param uf the uf to set
+     * @param tipoCliente the tipoPessoa to set
      */
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-
-    /**
-     * @return the tipoPessoa
-     */
-    public String getTipoPessoa() {
-        return tipoPessoa;
-    }
-
-    /**
-     * @param tipoPessoa the tipoPessoa to set
-     */
-    public void setTipoPessoa(String tipoPessoa) {
-        this.tipoPessoa = tipoPessoa;
+    public void setTipoCliente(String tipoCliente) {
+        this.tipoCliente = tipoCliente;
     }
 
     /**
@@ -116,20 +91,6 @@ public class Cliente {
      */
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    /**
-     * @return the cidade
-     */
-    public String getCidade() {
-        return cidade;
-    }
-
-    /**
-     * @param cidade the cidade to set
-     */
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
     }
 
     /**

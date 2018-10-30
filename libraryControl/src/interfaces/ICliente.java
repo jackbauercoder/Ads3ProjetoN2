@@ -16,4 +16,5 @@ import java.util.ArrayList;
     public void incluir(Cliente cliente) throws Exception;
     public ArrayList<Cliente> listar() throws Exception;
     public void alterar(Cliente cliente) throws Exception;
+    public void excluir(int parametro) throws Exception;
 }
