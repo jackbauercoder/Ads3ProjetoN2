@@ -35,9 +35,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         optAutor = new javax.swing.JMenuItem();
+        optCliente = new javax.swing.JMenuItem();
         optEditora = new javax.swing.JMenuItem();
         optLivro = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         optSair = new javax.swing.JMenuItem();
 
@@ -74,6 +74,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
         jMenu1.add(optAutor);
 
+        optCliente.setText("Cliente");
+        optCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optClienteActionPerformed(evt);
+            }
+        });
+        jMenu1.add(optCliente);
+
         optEditora.setText("Editora");
         optEditora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,9 +99,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.add(optLivro);
 
         jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Relatórios");
-        jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Sair");
 
@@ -167,6 +172,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_optLivroActionPerformed
 
+    private void optClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optClienteActionPerformed
+    }//GEN-LAST:event_optClienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -205,10 +213,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem optAutor;
+    private javax.swing.JMenuItem optCliente;
     private javax.swing.JMenuItem optEditora;
     private javax.swing.JMenuItem optLivro;
     private javax.swing.JMenuItem optSair;

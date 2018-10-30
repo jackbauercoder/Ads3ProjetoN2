@@ -5,38 +5,30 @@
  */
 package view;
 
-import entidades.Autor;
-import entidades.Editora;
-import entidades.Livro;
-import java.awt.Image;
+import entidades.Cliente;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import negocio.NAutor;
-import negocio.NEditora;
-import negocio.NLivro;
-import util.RenderizaLabel;
+import negocio.NCliente;
 
 /**
  *
  * @author repez
  */
-public class FrmPesLivro extends javax.swing.JInternalFrame {
+public class FrmPesCliente extends javax.swing.JInternalFrame {
     
-    JDesktopPane painelPrincipal;
-
+    JDesktopPane painelPrincipal;   
+    
     /**
-     * Creates new form FrmPesLivro
+     * Creates new form FrmPesCliente
      */
-    public FrmPesLivro() {
+    public FrmPesCliente() {
         initComponents();
-        carregarTabela();
+        carregaTabela();
     }
     
-    public FrmPesLivro(JDesktopPane painelPrincipal) {
+    public FrmPesCliente(JDesktopPane painelPrincipal) {
         this();
         this.painelPrincipal = painelPrincipal;
     }
@@ -54,14 +46,12 @@ public class FrmPesLivro extends javax.swing.JInternalFrame {
         tblResultado = new javax.swing.JTable();
         btnFechar = new javax.swing.JButton();
 
-        setTitle("Pesquisa de Livro");
-
         tblResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "ISBN", "Título", "Autor", "Editora", "Capa"
+                "ID", "Nome", "CPF", "E-Mail", "Endereço", "Telefone", "Saldo Devedor", "Tipo Cliente"
             }
         ));
         tblResultado.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -70,9 +60,6 @@ public class FrmPesLivro extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(tblResultado);
-        if (tblResultado.getColumnModel().getColumnCount() > 0) {
-            tblResultado.getColumnModel().getColumn(0).setMinWidth(20);
-        }
 
         btnFechar.setText("Fechar");
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +75,7 @@ public class FrmPesLivro extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnFechar)))
@@ -99,8 +86,8 @@ public class FrmPesLivro extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnFechar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -111,9 +98,9 @@ public class FrmPesLivro extends javax.swing.JInternalFrame {
         try {
             int linhaSelecionada = tblResultado.getSelectedRow();
             String id = tblResultado.getValueAt(linhaSelecionada, 0).toString();
-            FrmCadLivro frmCadLivro = new FrmCadLivro(painelPrincipal, id);
-            painelPrincipal.add(frmCadLivro);
-            frmCadLivro.setVisible(true);
+            FrmCadCliente frmCadCliente = new FrmCadCliente(painelPrincipal, id);
+            painelPrincipal.add(frmCadCliente);
+            frmCadCliente.setVisible(true);
             this.dispose();
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,43 +119,26 @@ public class FrmPesLivro extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblResultado;
     // End of variables declaration//GEN-END:variables
 
-    private void carregarTabela() {
+    private void carregaTabela() {
         try {
             
             DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
             
-            NLivro nl = new NLivro();
-            ArrayList<Livro> listaLivros = nl.listar();            
+            NCliente nc = new NCliente();
+            ArrayList<Cliente> listaClientes = nc.listar();            
             
-            //setando o modo de renderizacão da coluna Capa da tabela
-            tblResultado.getColumn("Capa").setCellRenderer(new RenderizaLabel());
-            
-            modelo.setNumRows(listaLivros.size());
-            
-            NAutor na = new NAutor();
-            NEditora ne = new NEditora();
-            
-            for (int i = 0; i < listaLivros.size(); i++) {
-                Livro liv = listaLivros.get(i);
-                modelo.setValueAt(liv.getId(), i, 0);
-                modelo.setValueAt(liv.getIsbn(), i, 1);
-                modelo.setValueAt(liv.getTitulo(), i, 2);   
-                
-                Autor a = na.consultar(liv.getAutor().getId());
-                modelo.setValueAt(a.getNome(), i, 3);
-                
-                Editora e = ne.consultar(liv.getEditora().getId());            
-                modelo.setValueAt(e.getNome(), i, 4);
-                   
-                ImageIcon foto = new ImageIcon(liv.getFotoDaCapa());
-                Image imagem = foto.getImage();
-                Image novaImagem = imagem.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-                ImageIcon fotoRedimensionada = new ImageIcon(novaImagem);
-                    
-                JLabel img = new JLabel();
-                img.setIcon(fotoRedimensionada);
-                
-                modelo.setValueAt(img, i, 5);
+            modelo.setNumRows(listaClientes.size());
+
+            for (int i = 0; i < listaClientes.size(); i++) {
+                Cliente c = listaClientes.get(i);
+                modelo.setValueAt(c.getId(), i, 0);
+                modelo.setValueAt(c.getNome(), i, 1);
+                modelo.setValueAt(c.getCpf(), i, 2);   
+                modelo.setValueAt(c.getEmail(), i, 3);   
+                modelo.setValueAt(c.getEndereco(), i, 4);   
+                modelo.setValueAt(c.getTelefone(), i, 5);   
+                modelo.setValueAt(c.getSaldoDevedor(), i, 6);   
+                modelo.setValueAt(c.getTipoCliente(), i, 7);   
             }
             
         } catch (Exception e) {

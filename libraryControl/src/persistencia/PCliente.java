@@ -91,6 +91,54 @@ public class PCliente implements ICliente{
         prd.execute();
         cnn.close();
     }
+    
+    public Cliente consultar(int parametro) throws Exception {
+        
+        String sql = " SELECT * FROM cliente WHERE id = ?;";
+        Connection cnn = util.Conexao.getConexao();
+        PreparedStatement prd = cnn.prepareStatement(sql);
+        prd.setInt(1, parametro);
+
+        ResultSet rs = prd.executeQuery();
+        Cliente c = new Cliente();
+        if (rs.next()) {
+            c.setId(rs.getInt("id"));
+            c.setNome(rs.getString("nome"));
+            c.setEmail(rs.getString("email"));
+            c.setCpf(rs.getString("cpf"));
+            c.setSaldoDevedor(rs.getFloat("saldo_devedor"));
+            c.setEndereco(rs.getString("endereco"));
+            c.setTelefone(rs.getString("telefone"));
+            c.setTipoCliente(rs.getString("tipo_cliente"));
+        }
+        prd.execute();
+        cnn.close();
+        return c;
+    }
+    
+    public Cliente consultar(String parametro) throws Exception {
+        
+        String sql = " SELECT * FROM cliente WHERE cpf = ?;";
+        Connection cnn = util.Conexao.getConexao();
+        PreparedStatement prd = cnn.prepareStatement(sql);
+        prd.setString(1, parametro);
+
+        ResultSet rs = prd.executeQuery();
+        Cliente c = new Cliente();
+        if (rs.next()) {
+            c.setId(rs.getInt("id"));
+            c.setNome(rs.getString("nome"));
+            c.setEmail(rs.getString("email"));
+            c.setCpf(rs.getString("cpf"));
+            c.setSaldoDevedor(rs.getFloat("saldo_devedor"));
+            c.setEndereco(rs.getString("endereco"));
+            c.setTelefone(rs.getString("telefone"));
+            c.setTipoCliente(rs.getString("tipo_cliente"));
+        }
+        prd.execute();
+        cnn.close();
+        return c;
+    }
 
 }
 
