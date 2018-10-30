@@ -45,6 +45,7 @@ public class FrmCadCliente extends javax.swing.JInternalFrame {
             txtFone.setText(c.getTelefone());
             cmbTipoCliente.setSelectedItem(c.getTipoCliente());
             txtSaldoDevedor.setText(String.valueOf(c.getSaldoDevedor()));
+            txtEmail.setText(c.getEmail());
             
             String endereco = c.getEndereco();
             String[] enderecoQuebrado = endereco.split(" - ");
@@ -98,7 +99,14 @@ public class FrmCadCliente extends javax.swing.JInternalFrame {
 
         jLabel1.setText("ID:");
 
+        txtID.setEditable(false);
+
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome:");
 
@@ -123,13 +131,28 @@ public class FrmCadCliente extends javax.swing.JInternalFrame {
         });
 
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
 
         btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Tipo Cliente:");
 
@@ -250,6 +273,93 @@ public class FrmCadCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFoneActionPerformed
 
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try {
+     
+            if(txtNome.getText().isEmpty()) {
+                throw new Exception("O nome é obrigatório!");
+            }
+            
+            if(txtCPF.getText().isEmpty()) {
+                throw new Exception("O CPF é obrigatório!");
+            }
+            
+            if(txtEndereco.getText().isEmpty()) {
+                throw new Exception("O endereço é obrigatório!");
+            }
+            
+            if(txtEmail.getText().isEmpty()) {
+                throw new Exception("O e-mail é obrigatório!");
+            }
+            
+            if(txtCidade.getText().isEmpty()) {
+                throw new Exception("A cidade é obrigatória!");
+            }
+            
+            if(cmbUF.getSelectedIndex() == 0) {
+                throw new Exception("A UF é obrigatória!");
+            }
+            
+            if(cmbTipoCliente.getSelectedIndex() == 0) {
+                throw new Exception("O tipo do cliente é obrigatóri!");
+            }
+            
+            if(txtFone.getText().isEmpty()) {
+                throw new Exception("O telefone é obrigatório!");
+            }
+
+            Cliente c = new Cliente();
+
+            if(!txtID.getText().isEmpty()) {
+                c.setId(Integer.parseInt(txtID.getText()));
+            }
+            
+            float saldo_devedor = 0;
+            if(!txtSaldoDevedor.getText().isEmpty()) {
+                saldo_devedor =  Float.parseFloat(txtSaldoDevedor.getText());
+            }
+            
+            String endereco = txtEndereco.getText() + " - " + txtCidade.getText() + " - " + cmbUF.getSelectedItem();
+
+            c.setNome(txtNome.getText());
+            c.setTelefone(txtFone.getText());
+            c.setSaldoDevedor(saldo_devedor);
+            c.setEmail(txtEmail.getText());
+            c.setEndereco(endereco);
+            c.setTipoCliente(cmbTipoCliente.getSelectedItem().toString());
+            c.setCpf(txtCPF.getText());
+      
+            NCliente nc = new NCliente();
+            nc.salvar(c);
+            JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+
+            limpar();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        try {
+            FrmPesCliente tlPesquisa = new FrmPesCliente(painelPrincipal);
+            painelPrincipal.add(tlPesquisa);
+            tlPesquisa.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limpar();
+    }//GEN-LAST:event_btnLimparActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcluir;
@@ -278,4 +388,16 @@ public class FrmCadCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtSaldoDevedor;
     // End of variables declaration//GEN-END:variables
+
+    private void limpar() {
+        txtCPF.setText("");
+        txtCidade.setText("");
+        txtEmail.setText("");
+        txtEndereco.setText("");
+        txtFone.setText("");
+        txtNome.setText("");
+        txtSaldoDevedor.setText("");
+        cmbTipoCliente.setSelectedIndex(0);
+        cmbUF.setSelectedIndex(0);
+    }
 }

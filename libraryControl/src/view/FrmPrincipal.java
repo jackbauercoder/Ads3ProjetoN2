@@ -159,7 +159,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_optEditoraActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void optLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optLivroActionPerformed
@@ -173,6 +173,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_optLivroActionPerformed
 
     private void optClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optClienteActionPerformed
+        try {
+            FrmCadCliente frmCadCliente = new FrmCadCliente(painelPrincipal);
+            painelPrincipal.add(frmCadCliente);
+            frmCadCliente.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }        
     }//GEN-LAST:event_optClienteActionPerformed
 
     /**

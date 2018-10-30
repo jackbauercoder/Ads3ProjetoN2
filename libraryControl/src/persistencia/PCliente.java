@@ -22,13 +22,13 @@ public class PCliente implements ICliente{
     @Override
     public void incluir(Cliente cliente) throws Exception {
         String sql = "INSERT INTO cliente (nome, email, cpf, saldo_devedor, endereco, telefone, tipo_cliente) "
-                + "VALUES (?,?,?,?,?,?)";
+                + "VALUES (?,?,?,?,?,?,?)";
         Connection cnn = util.Conexao.getConexao();
         PreparedStatement prd = cnn.prepareStatement(sql);
         prd.setString(1, cliente.getNome());
         prd.setString(2, cliente.getEmail());
         prd.setString(3, cliente.getCpf());
-        prd.setString(4, String.valueOf(cliente.getSaldoDevedor()));
+        prd.setFloat(4, cliente.getSaldoDevedor());
         prd.setString(5, cliente.getEndereco());
         prd.setString(6, cliente.getTelefone());
         prd.setString(7, cliente.getTipoCliente());
