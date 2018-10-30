@@ -61,12 +61,12 @@ public class PCliente implements ICliente{
     @Override
     public void alterar(Cliente cliente) throws Exception {
         String sql = "UPDATE cliente SET nome = ?,"
-                + "set email = ?,"
-                + "set telefone = ?,"
-                + "set endereco = ?,"
-                + "set cpf = ?,"
-                + "set tipo_cliente = ?,"
-                + "set saldo_devedor = ? "
+                + "email = ?,"
+                + "telefone = ?,"
+                + "endereco = ?,"
+                + "cpf = ?,"
+                + "tipo_cliente = ?,"
+                + "saldo_devedor = ? "
                 + " WHERE id = ?";
         Connection cnn = util.Conexao.getConexao();
         PreparedStatement prd = cnn.prepareStatement(sql);
