@@ -139,6 +139,11 @@ public class FrmCadCliente extends javax.swing.JInternalFrame {
 
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnLimpar.setText("Limpar");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -359,6 +364,25 @@ public class FrmCadCliente extends javax.swing.JInternalFrame {
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         limpar();
     }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        try {
+            int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o registro selecionado?", "libraryControl", JOptionPane.YES_NO_OPTION);
+            if(resposta == JOptionPane.YES_OPTION) {
+
+                if(txtID.getText().isEmpty()) {
+                    throw new Exception("ID inválido!");
+                }
+                NCliente nc = new NCliente();
+                nc.excluir(Integer.parseInt(txtID.getText()));
+                JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
+                limpar();
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
