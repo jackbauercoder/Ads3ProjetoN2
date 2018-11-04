@@ -22,21 +22,18 @@ public class Conexao {
     private static Connection conexao;
 
     private static Connection conectar() {
-
         try {
             Class.forName("org.postgresql.Driver");
-            
-            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/bibliogarrafy","postgres","root");
-            
+            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/bibliogarrafy","postgres","123456");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Driver JDB não encontrado! Verifique as bibliotecas da aplicação.");
+            return null;
         } catch (SQLException ex) {
             Logger.getLogger(Conexao.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Caminho, banco de dados, usuário ou senha incorretos, verifique!");
+            return null;
         }
-        return null;
-        
     }
     
     public static Connection getConexao(){

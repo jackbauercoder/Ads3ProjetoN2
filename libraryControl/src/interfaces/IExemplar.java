@@ -16,4 +16,5 @@ public interface IExemplar {
     public void incluir(Exemplar exemplar) throws Exception;
     public ArrayList<Exemplar> listar() throws Exception;
     public void alterar(Exemplar exemplar) throws Exception;
+    public void excluir(int parametro) throws Exception;
 }

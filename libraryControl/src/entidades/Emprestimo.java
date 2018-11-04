@@ -18,22 +18,12 @@ import java.util.concurrent.TimeUnit;
 public class Emprestimo {
 
     private int id = 0;
-    private int exemplarID = 0;
-    private int clienteID = 0;
+    private Exemplar exemplar = null;
+    private Cliente cliente = null;
     private Date dataEmprestimo = null;
     private Date dataDevolucao = null;
     private boolean isAtivo = true;
 
-    public Emprestimo() {
-
-    }
-
-    public Emprestimo(int id, int exemplarID, int clienteID) {
-        this.id = id;
-        this.exemplarID = exemplarID;
-        this.clienteID = clienteID;
-        this.dataEmprestimo = (Date) Calendar.getInstance().getTime();
-    }
 
     /**
      * @return the id
@@ -47,34 +37,6 @@ public class Emprestimo {
      */
     public void setId(int id) {
         this.id = id;
-    }
-
-    /**
-     * @return the exemplarID
-     */
-    public int getExemplarID() {
-        return exemplarID;
-    }
-
-    /**
-     * @param exemplarID the exemplarID to set
-     */
-    public void setExemplarID(int exemplarID) {
-        this.exemplarID = exemplarID;
-    }
-
-    /**
-     * @return the clienteID
-     */
-    public int getClienteID() {
-        return clienteID;
-    }
-
-    /**
-     * @param clienteID the clienteID to set
-     */
-    public void setClienteID(int clienteID) {
-        this.clienteID = clienteID;
     }
 
     /**
@@ -138,6 +100,34 @@ public class Emprestimo {
         c.setTime(dataEmprestimo);
         c.add(Calendar.DATE, limite);
         return c.getTime();
+    }
+
+    /**
+     * @return the exemplar
+     */
+    public Exemplar getExemplar() {
+        return exemplar;
+    }
+
+    /**
+     * @param exemplar the exemplar to set
+     */
+    public void setExemplar(Exemplar exemplar) {
+        this.exemplar = exemplar;
+    }
+
+    /**
+     * @return the cliente
+     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * @param cliente the cliente to set
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
 }

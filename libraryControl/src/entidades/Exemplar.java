@@ -5,9 +5,7 @@
  */
 package entidades;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -17,19 +15,9 @@ public class Exemplar {
 
     private int id = 0;
     private boolean disponivel = false;
-    private int livroID = 0;
+    private Livro livro = null;
     private boolean exemplarReserva = true;
     private Date disponivelAPartirDe = null;
-
-    public Exemplar() {
-
-    }
-
-    public Exemplar(int id, int livroID, Date disponivelAPartirDe) {
-        this.id = id;
-        this.livroID = livroID;
-        this.disponivelAPartirDe = disponivelAPartirDe;
-    }
 
     /**
      * @return the id
@@ -58,21 +46,7 @@ public class Exemplar {
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
     }
-
-    /**
-     * @return the livro
-     */
-    public int getLivroID() {
-        return livroID;
-    }
-
-    /**
-     * @param livroID
-     */
-    public void setLivroID(int livroID) {
-        this.livroID = livroID;
-    }
-
+    
     /**
      * @return the exemplarFixo
      */
@@ -99,6 +73,20 @@ public class Exemplar {
      */
     public void setDisponivelAPartirDe(Date disponivelAPartirDe) {
         this.disponivelAPartirDe = disponivelAPartirDe;
+    }
+
+    /**
+     * @return the livro
+     */
+    public Livro getLivro() {
+        return livro;
+    }
+
+    /**
+     * @param livro the livro to set
+     */
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
 
 }
