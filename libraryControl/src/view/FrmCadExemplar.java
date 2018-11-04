@@ -6,6 +6,7 @@
 package view;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,11 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
      */
     public FrmCadExemplar() {
         initComponents();
+    }
+
+    public FrmCadExemplar(JDesktopPane painelPrincipal) {
+        this();
+        this.painelPrincipal = painelPrincipal;
     }
 
     /**
@@ -188,7 +194,7 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_chkDisponivelActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -200,11 +206,18 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-        // TODO add your handling code here:
+        try {
+            FrmPesExemplar tlPesquisa = new FrmPesExemplar(painelPrincipal);
+            painelPrincipal.add(tlPesquisa);
+            tlPesquisa.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
 

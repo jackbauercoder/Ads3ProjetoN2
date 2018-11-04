@@ -37,6 +37,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         optAutor = new javax.swing.JMenuItem();
         optCliente = new javax.swing.JMenuItem();
         optEditora = new javax.swing.JMenuItem();
+        optExemplar = new javax.swing.JMenuItem();
         optLivro = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         optSair = new javax.swing.JMenuItem();
@@ -89,6 +90,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(optEditora);
+
+        optExemplar.setText("Exemplar");
+        optExemplar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optExemplarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(optExemplar);
 
         optLivro.setText("Livro");
         optLivro.addActionListener(new java.awt.event.ActionListener() {
@@ -182,6 +191,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }        
     }//GEN-LAST:event_optClienteActionPerformed
 
+    private void optExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optExemplarActionPerformed
+        try {
+            FrmCadExemplar frmCadExemplar = new FrmCadExemplar(painelPrincipal);
+            painelPrincipal.add(frmCadExemplar);
+            frmCadExemplar.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }    
+    }//GEN-LAST:event_optExemplarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -225,6 +244,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem optAutor;
     private javax.swing.JMenuItem optCliente;
     private javax.swing.JMenuItem optEditora;
+    private javax.swing.JMenuItem optExemplar;
     private javax.swing.JMenuItem optLivro;
     private javax.swing.JMenuItem optSair;
     private javax.swing.JDesktopPane painelPrincipal;
