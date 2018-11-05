@@ -55,6 +55,10 @@ public class NLivro {
     public Livro consultar(int parametro) throws SQLException, Exception {
         return persistencia.consultar(parametro);        
     }
+    
+    public Livro consultar(String parametro) throws SQLException, Exception {
+        return persistencia.consultar(parametro);        
+    }
 
     public ArrayList<Livro> listar() throws SQLException, Exception {
         return persistencia.listar();

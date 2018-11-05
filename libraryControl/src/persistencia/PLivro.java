@@ -124,4 +124,33 @@ public class PLivro implements ILivro {
         cnn.close();
     }
 
+    @Override
+    public Livro consultar(String parametro) throws Exception {
+        String sql = " SELECT * FROM livro WHERE titulo = ?;";
+        Connection cnn = util.Conexao.getConexao();
+        PreparedStatement prd = cnn.prepareStatement(sql);
+        prd.setString(1, parametro);
+        ResultSet rs = prd.executeQuery();
+        Livro retorno = new Livro();
+        
+        if (rs.next()) {
+
+            retorno.setId(rs.getInt("id"));
+            retorno.setIsbn(rs.getString("isbn"));
+            retorno.setTitulo(rs.getString("titulo"));
+            retorno.setFotoDaCapa(rs.getString("img_capa"));
+            
+            PAutor pa = new PAutor();
+            Autor a = pa.consultar(rs.getInt("id_autor"));
+            retorno.setAutor(a);
+            
+            PEditora pe = new PEditora();
+            Editora e = pe.consultar(rs.getInt("id_editora"));
+            retorno.setEditora(e);
+
+        }
+        
+        return retorno;
+    }
+
 }

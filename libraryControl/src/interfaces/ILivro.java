@@ -17,5 +17,6 @@ public interface ILivro {
     public ArrayList<Livro> listar() throws Exception;
     public void alterar(Livro livro) throws Exception;
     public Livro consultar(int parametro) throws Exception;
+    public Livro consultar(String parametro) throws Exception;
     public void excluir(int parametro) throws Exception;
 }

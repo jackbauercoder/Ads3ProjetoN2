@@ -6,6 +6,7 @@
 package view;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,18 +46,28 @@ public class FrmPesExemplar extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-
+                "ID", "Livro", "Disponível?", "Data de disponibilidade", "Exemplar de Reserva?"
             }
         ));
+        tblResultado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblResultadoMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblResultado);
 
         btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnFechar))
@@ -72,6 +83,25 @@ public class FrmPesExemplar extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblResultadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblResultadoMousePressed
+        try {
+            int linhaSelecionada = tblResultado.getSelectedRow();
+            String id = tblResultado.getValueAt(linhaSelecionada, 0).toString();
+
+            FrmCadExemplar frmCadExemplar = new FrmCadExemplar(painelPrincipal, id);
+            painelPrincipal.add(frmCadExemplar);
+            frmCadExemplar.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_tblResultadoMousePressed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnFecharActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

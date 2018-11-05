@@ -5,8 +5,15 @@
  */
 package view;
 
+import entidades.Exemplar;
+import entidades.Livro;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import negocio.NExemplar;
+import negocio.NLivro;
 
 /**
  *
@@ -21,11 +28,54 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
      */
     public FrmCadExemplar() {
         initComponents();
+        loadSelect();
     }
 
     public FrmCadExemplar(JDesktopPane painelPrincipal) {
         this();
         this.painelPrincipal = painelPrincipal;
+    }
+
+    public FrmCadExemplar(JDesktopPane painelPrincipal, String id) {
+        
+        this();
+        this.painelPrincipal = painelPrincipal;
+        
+        try {
+            
+            NExemplar ne = new NExemplar();
+            Exemplar exemplar = ne.consultar(Integer.parseInt(id));
+            
+            txtID.setText(String.valueOf(exemplar.getId()));
+            
+            NLivro nl = new NLivro();
+            Livro livro = nl.consultar(exemplar.getLivro().getId());
+            cmbLivro.setSelectedItem(livro.getTitulo());
+            
+            chkDisponivel.setSelected(exemplar.IsDisponivel());
+            chkExemplarReserva.setSelected(exemplar.isExemplarReserva());
+
+            btnExcluir.setEnabled(true);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    
+    public void loadSelect() {
+        try {
+            
+            cmbLivro.addItem("Selecione...");
+            for(Livro livro : new NLivro().listar()) {
+                cmbLivro.addItem(livro.getTitulo());
+            }
+            
+            chkDisponivel.isSelected();
+                        
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -194,11 +244,68 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_chkDisponivelActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
+        try {
+     
+            if(cmbLivro.getSelectedIndex() == 0) {
+                throw new Exception("O livro é obrigatório!");
+            }
+
+            Exemplar exemplar = new Exemplar();
+
+            if(!txtID.getText().isEmpty()) {
+                exemplar.setId(Integer.parseInt(txtID.getText()));
+            }
+
+            exemplar.setDisponivel(chkDisponivel.isSelected());
+            exemplar.setExemplarReserva(chkExemplarReserva.isSelected());
+            DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            java.sql.Date disponivel_em = new java.sql.Date(formato.parse(txtDisponivelEm.getText()).getTime());
+            exemplar.setDisponivelAPartirDe(disponivel_em);
+      
+            NLivro nl = new NLivro();
+            Livro livro = nl.consultar(cmbLivro.getSelectedItem().toString());
+            
+            exemplar.setLivro(livro);
+            
+            NExemplar ne = new NExemplar();
+            
+            ne.salvar(exemplar);
+            JOptionPane.showMessageDialog(null, "Exemplar cadastrado com sucesso!");
+
+            limpar();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        try {
+            int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o registro selecionado?", "libradyControl", JOptionPane.YES_NO_OPTION);
+            if(resposta == JOptionPane.YES_OPTION) {
+                
+                if(txtID.getText().isEmpty()) {
+                   throw new Exception("ID inválido!");
+                }
+                
+                NExemplar ne = new NExemplar();
+                
+                /*
+                TODO
+                Antes de deletar o exemplar, verificar se existem reservas / empréstimos do mesmo
+                */
+                    
+                ne.excluir(Integer.parseInt(txtID.getText()));
+
+                JOptionPane.showMessageDialog(null, "Exemplar excluído com sucesso!");
+
+                limpar();
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }// TODO add your handling code here:
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
@@ -238,4 +345,11 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtDisponivelEm;
     private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
+
+    private void limpar() {
+        txtDisponivelEm.setText("");
+        chkDisponivel.setSelected(false);
+        chkExemplarReserva.setSelected(false);
+        cmbLivro.setSelectedIndex(0);
+    }
 }
