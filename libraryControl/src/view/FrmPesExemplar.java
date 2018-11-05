@@ -5,8 +5,14 @@
  */
 package view;
 
+import entidades.Exemplar;
+import entidades.Livro;
+import java.util.ArrayList;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import negocio.NExemplar;
+import negocio.NLivro;
 
 /**
  *
@@ -21,6 +27,7 @@ public class FrmPesExemplar extends javax.swing.JInternalFrame {
      */
     public FrmPesExemplar() {
         initComponents();
+        carregarTabela();
     }
 
     public FrmPesExemplar(JDesktopPane painelPrincipal) {
@@ -109,4 +116,41 @@ public class FrmPesExemplar extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblResultado;
     // End of variables declaration//GEN-END:variables
+
+    private void carregarTabela() {
+        try {
+            
+            DefaultTableModel modelo = (DefaultTableModel) tblResultado.getModel();
+            
+            NExemplar ne = new NExemplar();
+            ArrayList<Exemplar> listaExemplares = ne.listar();            
+            
+            modelo.setNumRows(listaExemplares.size());
+            
+            NLivro nl = new NLivro();
+                        
+            for (int i = 0; i < listaExemplares.size(); i++) {
+                Exemplar exemplar = listaExemplares.get(i);
+                modelo.setValueAt(exemplar.getId(), i, 0);
+                               
+                Livro l = nl.consultar(exemplar.getLivro().getId());
+                modelo.setValueAt(l.getTitulo(), i, 1);
+                
+                String disponivel = "";
+                disponivel = exemplar.IsDisponivel() ? "Sim" : "Não";
+                modelo.setValueAt(disponivel, i, 2);
+                
+                modelo.setValueAt(util.DateConverter.dataPt(exemplar.getDisponivelAPartirDe().toString()), i, 3);
+                
+                String exemplar_reserva = "";
+                exemplar_reserva = exemplar.isExemplarReserva() ? "Sim" : "Não";
+                modelo.setValueAt(exemplar_reserva, i, 4);
+                               
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
 }

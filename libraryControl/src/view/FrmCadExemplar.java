@@ -54,6 +54,8 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
             
             chkDisponivel.setSelected(exemplar.IsDisponivel());
             chkExemplarReserva.setSelected(exemplar.isExemplarReserva());
+            
+            txtDisponivelEm.setText(util.DateConverter.dataPt(exemplar.getDisponivelAPartirDe().toString()));
 
             btnExcluir.setEnabled(true);
             
@@ -136,6 +138,7 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -215,14 +218,13 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
                     .addComponent(cmbLivro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel4))
                     .addComponent(chkDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chkExemplarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chkExemplarReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -309,7 +311,7 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        // TODO add your handling code here:
+        limpar();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -347,6 +349,7 @@ public class FrmCadExemplar extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void limpar() {
+        txtID.setText("");
         txtDisponivelEm.setText("");
         chkDisponivel.setSelected(false);
         chkExemplarReserva.setSelected(false);
