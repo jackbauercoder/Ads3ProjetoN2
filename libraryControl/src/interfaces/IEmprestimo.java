@@ -16,4 +16,6 @@ public interface IEmprestimo {
     public void incluir(Emprestimo emprestimo) throws Exception;
     public ArrayList<Emprestimo> listar() throws Exception;
     public void alterar(Emprestimo emprestimo) throws Exception;
+    public Emprestimo consultar(int parametro) throws Exception;
+    public void excluir(int parametro) throws Exception;
 }
