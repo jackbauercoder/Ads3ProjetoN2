@@ -5,17 +5,31 @@
  */
 package view;
 
+import javax.swing.JDesktopPane;
+
 /**
  *
  * @author repez
  */
 public class FrmCadEmprestimo extends javax.swing.JInternalFrame {
+    
+    JDesktopPane painelPrincipal;   
 
     /**
      * Creates new form FrmCadEmprestimo
      */
     public FrmCadEmprestimo() {
         initComponents();
+    }
+    
+    public FrmCadEmprestimo(JDesktopPane painelPrincipal) {
+        this();
+        this.painelPrincipal = painelPrincipal;
+    }
+    
+    public FrmCadEmprestimo(JDesktopPane painelPrincipal, String id) {
+        this();
+        this.painelPrincipal = painelPrincipal;
     }
 
     /**

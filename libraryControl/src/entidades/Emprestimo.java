@@ -8,7 +8,7 @@ package entidades;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -80,7 +80,8 @@ public class Emprestimo {
     public void setIsAtivo(boolean isAtivo) {
         this.isAtivo = isAtivo;
     }
-
+    
+    /*
     public float calculaSaldoDevedor() {
         float saldoDevedor = 0;
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -101,6 +102,7 @@ public class Emprestimo {
         c.add(Calendar.DATE, limite);
         return c.getTime();
     }
+    */
 
     /**
      * @return the exemplar
